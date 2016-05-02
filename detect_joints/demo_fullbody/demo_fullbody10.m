@@ -16,7 +16,7 @@ opt.numJoints = 14; 			% Number of joints
 opt.layerName = 'conv5_fusion'; % Output layer name
 opt.modelDefFile = '../../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
 %opt.modelFile = '../../models/heatmap-flic-fusion/caffe-heatmap-flic.caffemodel'; % Model weights
-opt.modelFile = '../../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_206000.caffemodel'; % Model weights
+opt.modelFile = '../../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_341600.caffemodel'; % Model weights
 opt.relatedJoints = [1 6;
                      2 5;
                      3 4;
@@ -32,7 +32,9 @@ opt.process_heatmap = false;
 addpath('../../../libs/caffe-heatmap-master/matlab')
 
 %im = imread('im1170.jpg');
-im = imread('485631973.jpg');
+%im = imread('485631973.jpg');
+%im = imread('im1424.jpg');
+im = imread('im1384.jpg');
 im = imresize(im, [256 256]);
 
 opt.im_original = im;
@@ -52,7 +54,7 @@ for i=1:opt.numJoints
 end
 
 figure(2),imshow(im),hold on;
-
+figure(2)
 plot_fullbody2(joints',[]);
 joints
 

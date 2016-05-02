@@ -19,7 +19,7 @@ function plot_fullbody( joints, labels )
     line([s.joints(l(1),1), s.joints(l(2),1)],[s.joints(l(1),2),s.joints(l(2),2)],'Color',color,'LineWidth',4);
    
     l = [3, 5];
-    color = [0.8 0.8 0;
+    color = [0.8 0.8 0];
     line([s.joints(l(1),1), s.joints(l(2),1)],[s.joints(l(1),2),s.joints(l(2),2)],'Color',color,'LineWidth',4);
    
     l = [5, 7];
@@ -31,7 +31,7 @@ function plot_fullbody( joints, labels )
     line([s.joints(l(1),1), s.joints(l(2),1)],[s.joints(l(1),2),s.joints(l(2),2)],'Color',color,'LineWidth',4);
    
     l = [6, 4];
-    color = [1 1 0.2];
+    color = [0.8 0.8 0];
     line([s.joints(l(1),1), s.joints(l(2),1)],[s.joints(l(1),2),s.joints(l(2),2)],'Color',color,'LineWidth',4);
    
     l = [1, 2];

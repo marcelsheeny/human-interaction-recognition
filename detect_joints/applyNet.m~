@@ -35,7 +35,6 @@ function [all_joints, heatmaps] = applyNet(video, opt)
                 imshow(im); hold on;
                 rectangle('Position', [opt.bboxes{f}(i,1:2), opt.bboxes{f}(i,3:4) - opt.bboxes{f}(i,1:2)]);
                 str = [];
-                
             end
             temp_joints = [];
             for j = 1: opt.numJoints
@@ -46,18 +45,16 @@ function [all_joints, heatmaps] = applyNet(video, opt)
                     %str = [str, num2str(x) ',' num2str(y) ','];
                     %plot(x,y, 'r*');
                     %text(x,y, num2str(j), 'Color', 'yellow');
-                    
+                    plot_fullbody2(
                 end
             end
-            temp_joints
-            plot_fullbody2(reshape(temp_joints,[2 14])',[]);
             frame_joints = [frame_joints; temp_joints];
         end
         
-        all_joints{f} = frame_joints;
         if(opt.debug)
             waitforbuttonpress;
         end
+        all_joints{f} = frame_joints;
 
     end
 end

@@ -10,15 +10,15 @@ clc;
 close all;
 
 opt.visualise = false;		% Visualise predictions?
-opt.debug = true; 
+opt.debug = false; 
 opt.useGPU = true; 			% Run on GPU
 opt.dims = [256 256]; 		% Input dimensions (needs to match matlab.txt)
-opt.numJoints = 14; 			% Number of joints
+opt.numJoints = 7; 			% Number of joints
 opt.layerName = 'conv5_fusion'; % Output layer name
 %opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/matlab.prototxt'; % Model definition
 %opt.modelFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/caffe-heatmap-flic.caffemodel'; % Model weights
-opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
-opt.modelFile = '../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_267600.caffemodel'; % Model weights
+opt.modelDefFile = '../../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
+opt.modelFile = '../../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_267600.caffemodel'; % Model weights
 
 %opt.modelFile = '/data/tp/nets/heatmap-flic-fusion/snapshots/heatmap_train_iter_29600.caffemodel';
 
@@ -38,12 +38,12 @@ opt.net = initCaffe(opt);
 
 for i=1:length(videos)
     
-    [pa,fi,ex] = fileparts(videos(i).name);
+    [pa,fi,ex] = videos(i).name;
    
-    load([path fi 'boxes.mat']);    
+
     
     disp([videos(i).name , ' ', num2str(i), ' out of ', num2str(length(videos))]);
-    %disp([boxes(i).name , ' ', num2str(i), ' out of ', num2str(length(boxes))]);
+    disp([boxes(i).name , ' ', num2str(i), ' out of ', num2str(length(boxes))]);
     video = VideoReader([path videos(i).name]);
     
     opt.bboxes = bboxes;

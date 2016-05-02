@@ -1,5 +1,5 @@
 % Wrapper to run network on multiple images
-function [all_joints, heatmaps] = applyNet(video, opt)
+function [all_joints, heatmaps] = applyNet(images, opt)
 
 %fprintf('config:\n\n');
 %disp(opt)
@@ -7,20 +7,24 @@ function [all_joints, heatmaps] = applyNet(video, opt)
     all_joints = {};
     %net = initCaffe(opt); 
     
-    n_frames = min(length(opt.bboxes), video.FrameRate*video.Duration);
+    n_frames = length(images);
     
     for f=1:n_frames
-        disp(['frame: ', num2str(f), ' out of: ', num2str(video.FrameRate*video.Duration)]);
-        im = readFrame(video);
-        if (f/video.FrameRate > video.Duration)
-            video.CurrentTime = video.Duration;
-        else
-            video.CurrentTime = f/video.FrameRate;
-        end
+        disp(['frame: ', num2str(f), ' out of: ', num2str(n_frames)]);
+        im = images{f};
+        
         frame_joints = [];
         for i=1:size(opt.bboxes{f},1)
-
-            im_crop = imcrop(im,[opt.bboxes{f}(i,1:2), opt.bboxes{f}(i,3:4) - opt.bboxes{f}(i,1:2)] );
+            x = opt.bboxes{f}(i,1);
+            y = opt.bboxes{f}(i,2);
+            w = opt.bboxes{f}(i,3) - opt.bboxes{f}(i,1);
+            h = opt.bboxes{f}(i,4) - opt.bboxes{f}(i,2);
+            
+            rate_x = 0.3;
+            rate_y = 0.02;
+            
+            crop_window = [x - w*rate_x y - h*rate_y  w + w*rate_x h-h*rate_y];
+            im_crop = imcrop(im,crop_window );
             
             ratex = size(im_crop,2)/opt.dims(1);
             ratey = size(im_crop,1)/opt.dims(2);
@@ -33,14 +37,14 @@ function [all_joints, heatmaps] = applyNet(video, opt)
             if (opt.debug)
                 figure(1);
                 imshow(im); hold on;
-                rectangle('Position', [opt.bboxes{f}(i,1:2), opt.bboxes{f}(i,3:4) - opt.bboxes{f}(i,1:2)]);
+                rectangle('Position', crop_window);
                 str = [];
                 
             end
             temp_joints = [];
             for j = 1: opt.numJoints
-                x = double(joints(1,j)*ratex+opt.bboxes{f}(i,1));
-                y = double(joints(2,j)*ratey+opt.bboxes{f}(i,2));
+                x = double(joints(1,j)*ratex+crop_window(1));
+                y = double(joints(2,j)*ratey+crop_window(2));
                 temp_joints = [temp_joints, x,y];
                 if (opt.debug)
                     %str = [str, num2str(x) ',' num2str(y) ','];
@@ -49,15 +53,21 @@ function [all_joints, heatmaps] = applyNet(video, opt)
                     
                 end
             end
-            temp_joints
-            plot_fullbody2(reshape(temp_joints,[2 14])',[]);
+            
             frame_joints = [frame_joints; temp_joints];
+            if(opt.debug)
+                temp_joints = reshape(temp_joints, [2,7]);
+
+                hold on
+                %plotSkeleton(temp_joints, [], []);
+                plot_skeleton_kinect( opt.joints_gt{f}{i} )
+                hold off
+                waitforbuttonpress;
+            end
         end
         
         all_joints{f} = frame_joints;
-        if(opt.debug)
-            waitforbuttonpress;
-        end
+        
 
     end
 end

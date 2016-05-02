@@ -17,41 +17,45 @@ opt.numJoints = 14; 			% Number of joints
 opt.layerName = 'conv5_fusion'; % Output layer name
 %opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/matlab.prototxt'; % Model definition
 %opt.modelFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/caffe-heatmap-flic.caffemodel'; % Model weights
-opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
-opt.modelFile = '../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_267600.caffemodel'; % Model weights
+opt.modelDefFile = '../../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
+opt.modelFile = '../../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_274400.caffemodel'; % Model weights
 
 %opt.modelFile = '/data/tp/nets/heatmap-flic-fusion/snapshots/heatmap_train_iter_29600.caffemodel';
 
 % Add caffe matlab into path
-addpath(genpath('../../libs/caffe-heatmap-master/matlab'));
+addpath(genpath('../../../libs/caffe-heatmap-master/matlab'));
 
-% Image input directory
-opt.inputDir = 'caffe-heatmap-master/matlab/pose/sample_images2/';
 
 %for all videos and boxes
 
-path = '../../datasets/human_activities_videos/';
+path = '../../../datasets/human_activities_videos/';
 
 videos = dir([path '*.avi']);
 
 opt.net = initCaffe(opt);
 
-for i=1:length(videos)
+%for i=1:length(videos)
     
-    [pa,fi,ex] = fileparts(videos(i).name);
+
+
+    %[pa,fi,ex] = fileparts(videos(i).name);
    
-    load([path fi 'boxes.mat']);    
+    %load([path fi 'matlabtrack.mat']);    
+    load([path 'seq1matlabtrack_processed.mat']);    
     
-    disp([videos(i).name , ' ', num2str(i), ' out of ', num2str(length(videos))]);
+    
+    
+    %disp([videos(i).name , ' ', num2str(i), ' out of ', num2str(length(videos))]);
     %disp([boxes(i).name , ' ', num2str(i), ' out of ', num2str(length(boxes))]);
-    video = VideoReader([path videos(i).name]);
+    %video = VideoReader([path videos(i).name]);
+    video = VideoReader([path 'seq1.avi']);
     
-    opt.bboxes = bboxes;
+    opt.bboxes = all_tracks;
     % Apply network
     joints = applyNet(video, opt);
-    [p,name,ext] = fileparts(videos(i).name);
-    save([path name, 'joints.mat'], 'joints');
+    %[p,name,ext] = fileparts(videos(i).name);
+    %save([path name, 'joints.mat'], 'joints');
 
-end
+%end
 caffe.reset_all(); 
 clear mex;

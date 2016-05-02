@@ -18,7 +18,7 @@ opt.layerName = 'conv5_fusion'; % Output layer name
 %opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/matlab.prototxt'; % Model definition
 %opt.modelFile = '../../libs/caffe-heatmap-master/models/heatmap-flic-fusion/caffe-heatmap-flic.caffemodel'; % Model weights
 opt.modelDefFile = '../../libs/caffe-heatmap-master/models/heatmap-fullbody-10/matlab.prototxt'; % Model definition
-opt.modelFile = '../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_267600.caffemodel'; % Model weights
+opt.modelFile = '../../libs/caffe-heatmap-master/data/tp/nets/heatmap-fullbody-10/snapshots/heatmap_train_iter_312000.caffemodel'; % Model weights
 
 %opt.modelFile = '/data/tp/nets/heatmap-flic-fusion/snapshots/heatmap_train_iter_29600.caffemodel';
 
@@ -40,7 +40,7 @@ for i=1:length(videos)
     
     [pa,fi,ex] = fileparts(videos(i).name);
    
-    load([path fi 'boxes.mat']);    
+    load([path fi 'matlabboxes.mat']);    
     
     disp([videos(i).name , ' ', num2str(i), ' out of ', num2str(length(videos))]);
     %disp([boxes(i).name , ' ', num2str(i), ' out of ', num2str(length(boxes))]);
