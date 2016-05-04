@@ -1,9 +1,0 @@
-clc;
-close all;
-clear all;
-
-a = cell(100);
-
-for i=1:100
-   a{i} = i; 
-end

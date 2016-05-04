@@ -32,10 +32,6 @@ test_instance_matrix = [];
 sets(1:2) = [];
 cnt = 1;
 
-i = 1;
-j = 1;
-k = 1;
-
 n_frames_train = 20;
 
 
@@ -114,24 +110,10 @@ opts = '-s 0 -t 2 -g 0.0625 -c 8';
 model = svmtrain(training_label_vector, training_instance_matrix, opts);
 [predicted_label, accuracy, decision_values] = svmpredict(test_label_vector, test_instance_matrix, model);
 
-%{
-f_train = fopen('train.txt','w');
-f_test = fopen('test.txt','w');
+conf_m = zeros(8,8);
+for a=1:size(predicted_label,1)
+    i = predicted_label(a,1);
+    j = test_label_vector(a,1);
+    conf_m(i,j) = conf_m(i,j)+1;
+end
 
-disp('train...');
-for i=1:size(training_instance_matrix,1)
-    fprintf(f_train, [num2str(training_label_vector(i)) ' ']);
-    for j=1:size(training_instance_matrix,2)
-        fprintf(f_train, [num2str(j) ':' num2str(training_instance_matrix(i,j)) ' ']);
-    end
-    fprintf(f_train,'\n');
-end
-disp('test...');
-for i=1:size(test_instance_matrix,1)
-    fprintf(f_test, [num2str(test_label_vector(i)) ' ']);
-    for j=1:size(test_instance_matrix,2)
-        fprintf(f_test, [num2str(j) ':' num2str(test_instance_matrix(i,j)) ' ']);
-    end
-    fprintf(f_test,'\n');
-end
-%}
