@@ -42,12 +42,8 @@ for set=1:size(sets,1)
     disp([num2str(set) ' sets out of ' num2str(size(sets,1))]);
     interactions = dir([path sets(set).name '/*/']);
     interactions(1:2) = [];
-    if (set == 1)
-        ini = 7;
-    else
-        init = 1;
-    end
-    for j=ini:size(interactions,1)
+
+    for j=1:size(interactions,1)
        
         samples = dir([path sets(set).name '/' interactions(j).name '/*/']);
         samples(1:2) = [];

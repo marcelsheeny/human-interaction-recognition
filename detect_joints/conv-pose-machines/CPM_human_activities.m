@@ -31,20 +31,19 @@ interestPart = 'Lwri'; % to look across stages. check available names in config.
 %title('Drag a bounding box');
 %rectangle = getrect(1);
 
-path = '../../../datasets/kinect_interaction/';
+path = '../../../datasets/human_interaction/';
 
 sets = dir([path '*/']);
 sets(1:2) = [];
 
-%video_files = dir([dir_path '*.avi']);
+
 
 for set=1:size(sets,1)
     disp([num2str(set) ' sets out of ' num2str(size(sets,1))]);
     interactions = dir([path sets(set).name '/*/']);
     interactions(1:2) = [];
-    if (set == 1)
-        ini =
-    for j=ini:size(interactions,1)
+
+    for j=1:size(interactions,1)
        
         samples = dir([path sets(set).name '/' interactions(j).name '/*/']);
         samples(1:2) = [];

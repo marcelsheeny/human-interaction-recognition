@@ -1,2 +1,6 @@
 # .mat files
 *.mat
+
+*.caffemodel
+
+*.mp4
