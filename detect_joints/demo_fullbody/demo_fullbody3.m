@@ -45,3 +45,6 @@ opt.im_original = im;
 [joints,heatmaps] = applyNet(im, opt);
 
 joints
+
+caffe.reset_all(); 
+clear mex;

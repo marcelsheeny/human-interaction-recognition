@@ -1,0 +1,7 @@
+function [ norm_feat ] = normalize_features( feat )
+%NORMALIZE_FEATURES Summary of this function goes here
+%   Detailed explanation goes here
+
+ norm_feat = (data - min(data))./(max(data) - min(data));
+end
+

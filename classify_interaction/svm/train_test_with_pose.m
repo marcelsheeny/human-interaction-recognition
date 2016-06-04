@@ -38,7 +38,7 @@ test_instance_matrix = [];
 sets(1:2) = [];
 cnt = 1;
 
-n_frames_train = 10;
+n_frames_train = 5;
 
 im = imread('/home/visionlab/marcel/datasets/kinect_interaction/set01/01/001/rgb_000055.png');
 [resy,resx,resz] = size(im)

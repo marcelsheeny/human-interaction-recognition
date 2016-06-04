@@ -49,7 +49,6 @@ function multiObjectTracking()
 % Create System objects used for reading video, detecting moving objects,
 % and displaying the results.
 
-
 path = '../../datasets/kinect_interaction/';
 
 sets = dir([path '*/']);
@@ -99,7 +98,7 @@ for set=1:size(sets,1)
             % Detect moving objects, and track them across video frames.
             for f_n=1:length(image_files)
 
-
+                tic
 %                frame = obj.images{f_n};
                 [centroids, bboxes] = detectObjects(obj,f_n);
                 predictNewLocationsOfTracks();
@@ -110,7 +109,7 @@ for set=1:size(sets,1)
                 updateUnassignedTracks();
                 deleteLostTracks();
                 createNewTracks();
-
+                 toc
                 %increaseRectSize();
 
                 displayTrackingResults();

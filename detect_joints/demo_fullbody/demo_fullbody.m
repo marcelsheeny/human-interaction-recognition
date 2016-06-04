@@ -43,3 +43,6 @@ opt.im_original = im;
 joints
 
 %getJointsFromHeatmaps(heatmaps,opt);
+
+caffe.reset_all();
+clear mex;
